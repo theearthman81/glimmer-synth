@@ -1,0 +1,8 @@
+$graphic-primary: #1A1A1A;
+
+.synth-graphic {
+  background: $graphic-primary;
+  box-shadow: inset 0 0 10px lighten($graphic-primary, 16%);
+  filter: blur(1px);
+  padding: 10px;
+}

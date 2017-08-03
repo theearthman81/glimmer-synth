@@ -1,0 +1,12 @@
+<div class="synth-volume">
+  <div
+    class="synth-volume__ctrl"
+    style="transform: rotate({{angle}}deg)"
+    onclick={{action @increment}}>
+  </div>
+  <div>
+    {{#each ticks key="@index" as |tick|}}
+      <div title="{{tick}}" class="synth-volume__tick"></div>
+    {{/each}}
+  </div>
+</div>

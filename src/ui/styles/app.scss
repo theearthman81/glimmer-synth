@@ -1,0 +1,24 @@
+@import 'base';
+@import 'synth-ctrl';
+@import 'synth-volume';
+@import 'synth-graphic';
+@import 'synth-btn';
+@import 'synth-key';
+@import 'synth-keyboard';
+
+.synth {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-family: "Open Sans", sans-serif;
+}
+
+.synth__ctrl-wrapper {
+  width: 1042px;
+}
+
+.synth__keyboard-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 0 0 10px 16px;
+}

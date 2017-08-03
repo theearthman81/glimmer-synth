@@ -1,0 +1,6 @@
+<li
+  class="synth-key {{if isActive (concat "synth-key--" @key.color "--active")}} {{if @key.indent "synth-key--indent"}} synth-key--{{@key.color}}"
+  onmousedown={{action start}}
+  onmouseup={{action stop}}
+  onmouseout={{action stop}}>
+</li>

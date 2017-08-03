@@ -1,0 +1,68 @@
+$volume-primary: #181818;
+
+.synth-volume {
+  font-family: 'Roboto Mono', monospace;
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: solid 14px darken($volume-primary, 4%);
+  background:
+    -webkit-gradient(
+      linear, left bottom, left top,
+      color-stop(0, lighten($volume-primary, 2%)),
+      color-stop(1, darken($volume-primary, 2%))
+    );
+  box-shadow:
+    0 0.2em 0.1em 0.05em transparentize(darken($volume-primary, 10%), 0.1) inset,
+    0 -0.2em 0.1em 0.05em transparentize(darken($volume-primary, 10%), 0.5) inset,
+    0 0.5em 0.65em 0 transparentize(darken($volume-primary, 10%), 0.3);
+
+  &__tick {
+    pointer-events: none;
+    font-size: 8px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: visible;
+
+    &:after {
+      content: attr(title);
+      color: invert($volume-primary);
+      width: 5px;
+      height: 5px;
+      position: absolute;
+      top: -15px;
+      left: 50%;
+    }
+
+    @for $i from 1 through 11 {
+     &:nth-child(#{$i}) {
+        transform: rotate(-180 + $i * 30deg);
+     }
+   }
+  }
+
+  &__ctrl {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transform: rotate(0deg);
+    transition: transform 1s;
+    cursor: pointer;
+
+    &:before {
+      content: "";
+      position: absolute;
+      bottom: 15%;
+      left: 25%;
+      width: 5%;
+      height: 5%;
+      background-color: invert($volume-primary);
+      border-radius: 50%;
+    }
+  }
+}

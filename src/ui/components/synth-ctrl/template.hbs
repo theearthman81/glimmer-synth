@@ -1,0 +1,27 @@
+<div class="synth-ctrl">
+  <div class="synth-ctrl__btns">
+    <h2 class="synth-ctrl__logo">GLMR-Synth</h2>
+    <synth-btn
+      @action={{action record}}
+      @isActive={{isRecording}}
+      @text="rec"
+      @type="record"
+    />
+    <synth-btn
+      @action={{action play}}
+      @isActive={{isPlaying}}
+      @text="play"
+      @type="play"
+    />
+  </div>
+  <synth-graphic
+    @height=120
+    @width=460
+  />
+  <div class="synth-ctrl__volume">
+    <synth-volume
+      @increment={{action increment}}
+      @volume={{volume}}
+    />
+  </div>
+</div>
