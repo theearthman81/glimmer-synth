@@ -4,7 +4,10 @@ import {
   default as audioService,
 } from '../../../utils/audio-service';
 import { Note } from '../../../utils/note';
-import * as Rx from 'rxjs/Rx';
+import {
+  KeyService,
+  default as keyService,
+} from '../../../utils/key-service';
 
 export default class SynthKey extends Component {
   @tracked isActive: boolean;
@@ -14,12 +17,28 @@ export default class SynthKey extends Component {
     return audioService;
   }
 
-  didInsertElement() {
-    var keyDowns = Rx.Observable.fromEvent(document, 'keydown');
+  get keyService(): KeyService {
+    return keyService;
+  }
 
-    keyDowns.subscribe(e =>
-      this.isActive ? this.stop() : this.start()
-    );
+  didInsertElement(): void {
+    const {
+      args: {
+        key: {
+          shortcut,
+        },
+      },
+      keyService: {
+        events,
+      }
+    } = this;
+    events
+      .filter(({ type, key }) =>
+        key === shortcut
+      )
+      .subscribe(() =>
+        this.isActive ? this.stop() : this.start()
+      );
   }
 
   get note(): Note {
