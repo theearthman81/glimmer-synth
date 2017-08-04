@@ -2,12 +2,12 @@ import Component, { tracked } from '@glimmer/component';
 import {
   AudioService,
   default as audioService,
-} from '../../../utils/audio-service';
+} from '../../../utils/services/audio';
 import { Note } from '../../../utils/note';
 import {
   KeyService,
   default as keyService,
-} from '../../../utils/key-service';
+} from '../../../utils/services/key';
 
 export default class SynthKey extends Component {
   @tracked isActive: boolean;

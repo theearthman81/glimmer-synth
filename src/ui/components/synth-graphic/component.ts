@@ -2,12 +2,14 @@ import Component, { tracked } from '@glimmer/component';
 import {
   AudioService,
   default as audioService,
-} from '../../../utils/audio-service';
+} from '../../../utils/services/audio';
 
 export default class SynthGraphic extends Component {
   context: CanvasRenderingContext2D;
-  constructor(...args) {
-    super(...args)
+  element: HTMLElement;
+
+  constructor(options: object) {
+    super(options);
     this._draw = this._draw.bind(this);
   }
 
@@ -19,7 +21,7 @@ export default class SynthGraphic extends Component {
     return audioService;
   }
 
-  didInsertElement() {
+  didInsertElement(): void {
     const {
       args: {
         height,

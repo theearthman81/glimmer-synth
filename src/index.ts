@@ -17,3 +17,17 @@ app.registerInitializer({
 app.renderComponent('synth-app', containerElement, null);
 
 app.boot();
+
+console.log(`%cWelcome To GLMR Synth!
+%c
+ _______________________________________ 
+| GLMR-SYNTH  |...  .       |           |
+|  :::        |... ....  .  |           |
+|  :::        |.............|           |
+|_______________________________________|
+|  |█| |█|  |  |█| |█| |█|  |  |█| |█|  |
+|  |█| |█|  |  |█| |█| |█|  |  |█| |█|  |
+|  |█| |█|  |  |█| |█| |█|  |  |█| |█|  |
+|   |   |   |   |   |   |   |   |   |   |
+|___|___|___|___|___|___|___|___|___|___|
+`, 'color: #222; text-shadow: 1px 1px 1px #bada55;', 'background: #222; color: #bada55');

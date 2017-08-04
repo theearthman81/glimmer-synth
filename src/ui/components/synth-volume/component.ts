@@ -8,6 +8,6 @@ export default class SynthVolume extends Component {
   @tracked('args')
   public get angle(): number {
     const max = ANGLE * (this.ticks.length - 1);
-    return Math.min(this.args.volume * ANGLE, max);
+    return Math.min((this.args.volume * ANGLE), max);
   }
 }
