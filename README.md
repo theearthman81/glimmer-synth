@@ -1,4 +1,4 @@
-# Glimmer Synth
+# :musical_keyboard: Glimmer Synth 
 
 ```
  _______________________________________          |--|
@@ -15,7 +15,7 @@
 
 Experiment to build a synthesizer with using WebAudio API and Glimmer.
 
-## Prerequisites
+## :musical_note: Prerequisites
 
 You will need the following things properly installed on your computer.
 
@@ -24,13 +24,13 @@ You will need the following things properly installed on your computer.
 * [Yarn](https://yarnpkg.com/en/)
 * [Ember CLI](https://ember-cli.com/)
 
-## Installation
+## :musical_note: Installation
 
 * `git clone <repository-url>` this repository
 * `cd glimmmer-synth`
 * `yarn`
 
-## Running / Development
+## :musical_note: Running / Development
 
 * `ember serve`
 * Visit [http://localhost:4200](http://localhost:4200).
