@@ -9,14 +9,23 @@ import {
   default as keyService,
 } from '../../../utils/services/key';
 
-const INC: string = '+';
 const DEC: string = '-';
+const INC: string = '+';
+const PLAY: string = '2';
+const RECORD: string = '1';
+
+const convertVolume = volume =>
+  volume / VOLUME_INCREMENT;
 
 export default class SynthCtrl extends Component {
   @tracked isRecording: boolean = false;
   @tracked isPlaying: boolean = false;
   @tracked volume: number;
 
+  constructor(options) {
+    super(options);
+    this._handleKeyPress = this._handleKeyPress.bind(this);
+  }
   get audioService(): AudioService {
     return audioService;
   }
@@ -31,17 +40,32 @@ export default class SynthCtrl extends Component {
         volume,
       },
       keyService: {
-        events,
-      }
+        keyup,
+      },
     } = this;
-    this.volume = volume / VOLUME_INCREMENT;
-    events
-      .filter(({ type, key }) => {
-        return type === 'keyup' && [INC, DEC].includes(key)
-      })
-      .subscribe(({ key }) =>
-        key === INC ? this.increment() : this.decrement()
-      );
+    this.volume = convertVolume(volume);
+    keyup
+      .filter(({ type, key }) =>
+        [DEC, INC, PLAY, RECORD].indexOf(key) > -1
+      )
+      .subscribe(this._handleKeyPress);
+  }
+
+  _handleKeyPress({ key }): void {
+    switch (key) {
+      case DEC:
+        this.decrement();
+        break;
+      case INC:
+        this.increment();
+        break;
+      case PLAY:
+        this.play();
+        break;
+      case RECORD:
+        this.record();
+        break;
+    }
   }
 
   record(): void {
@@ -76,11 +100,11 @@ export default class SynthCtrl extends Component {
 
   increment(): void {
     this.audioService.incrementVolume();
-    this.volume = this.audioService.volume / VOLUME_INCREMENT;
+    this.volume = convertVolume(this.audioService.volume);
   }
 
   decrement(): void {
     this.audioService.decrementVolume();
-    this.volume = this.audioService.volume / VOLUME_INCREMENT;
+    this.volume = convertVolume(this.audioService.volume);
   }
 }

@@ -29,10 +29,10 @@ export default class SynthKey extends Component {
         },
       },
       keyService: {
-        events,
-      }
+        keypress,
+      },
     } = this;
-    events
+    keypress
       .filter(({ type, key }) =>
         key === shortcut
       )
@@ -43,7 +43,12 @@ export default class SynthKey extends Component {
 
   get note(): Note {
     if (!this._note) {
-      const { name, octave } = this.args.key;
+      const {
+        key: {
+          name,
+          octave,
+        },
+      } = this.args;
       this._note = this.audioService.createNote(name, octave);
     }
     return this._note;

@@ -56,7 +56,7 @@ export class AudioService {
 
     masterVolume.connect(dest);
     effect.connect(dest);
-    this.mediaRecorder = mediaRecorder;
+    mediaRecorder = mediaRecorder;
   }
 
   setUpVolume(): void {
