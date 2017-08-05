@@ -1,5 +1,6 @@
 <button
   onclick={{action @action}}
-  class="synth-btn--{{@type}}{{if @isActive "--active"}} synth-btn">
+  class="synth-btn--{{@type}}{{if @isActive "--active"}} synth-btn"
+  title={{@title}}>
   {{@text}}
 </button>

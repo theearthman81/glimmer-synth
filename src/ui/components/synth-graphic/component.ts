@@ -13,26 +13,12 @@ export default class SynthGraphic extends Component {
     this._draw = this._draw.bind(this);
   }
 
-  get canvas(): HTMLCanvasElement {
-    return this.element.querySelector('canvas');
-  }
-
   get audioService(): AudioService {
     return audioService;
   }
 
-  didInsertElement(): void {
-    const {
-      args: {
-        height,
-        width,
-      },
-      canvas,
-    } = this;
-    this.context = canvas.getContext('2d');
-    canvas.width = width;
-    canvas.height = height;
-    this._draw();
+  get canvas(): HTMLCanvasElement {
+    return this.element.querySelector('canvas');
   }
 
   _draw(): void {
@@ -68,5 +54,19 @@ export default class SynthGraphic extends Component {
     }
 
     requestAnimationFrame(this._draw);
+  }
+
+  didInsertElement(): void {
+    const {
+      args: {
+        height,
+        width,
+      },
+      canvas,
+    } = this;
+    this.context = canvas.getContext('2d');
+    canvas.width = width;
+    canvas.height = height;
+    this._draw();
   }
 }

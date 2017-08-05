@@ -9,6 +9,13 @@ interface KeyEvent {
 export class KeyService {
   private _events: Rx.Observable<KeyEvent>;
 
+  public get keydown(): Rx.Observable<KeyEvent> {
+    return this.keypress
+      .filter(({ type }) =>
+        type === 'keydown'
+      );
+  }
+
   public get keypress(): Rx.Observable<KeyEvent> {
     if (!this._events) {
       const keyDowns = Rx.Observable.fromEvent(document, 'keydown');
@@ -34,13 +41,6 @@ export class KeyService {
     return this.keypress
       .filter(({ type }) =>
         type === 'keyup'
-      );
-  }
-
-  public get keydown(): Rx.Observable<KeyEvent> {
-    return this.keypress
-      .filter(({ type }) =>
-        type === 'keydown'
       );
   }
 }

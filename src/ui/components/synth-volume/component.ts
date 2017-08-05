@@ -1,9 +1,9 @@
 import Component, { tracked } from '@glimmer/component';
 
-export const ANGLE = 30;
+export const ANGLE: number = 30;
 
 export default class SynthVolume extends Component {
-  protected ticks:Array<number> = [...Array(11).keys()];
+  ticks: Array<number> = [...Array(11).keys()];
 
   @tracked('args')
   public get angle(): number {

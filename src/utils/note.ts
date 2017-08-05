@@ -16,12 +16,12 @@ export const calculateFrequency = (semitones: number, base: number): number =>
 
 export class Note {
   context: AudioContext;
-  destination: ConvolverNode;
+  destination: GainNode;
   frequency: number;
   isPlaying: boolean;
   primary: OscillatorNode | null;
   secondary: OscillatorNode | null;
-  constructor(note: string, octave: number, context: AudioContext, destination: ConvolverNode) {
+  constructor(note: string, octave: number, context: AudioContext, destination: GainNode) {
     const [ pitch, symbol ] = note.split('');
     const semitones = calculateSteps(pitch, octave) + (symbol ? 1 : 0);
     this.frequency = calculateFrequency(semitones, 440.0);

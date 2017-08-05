@@ -1,4 +1,5 @@
 import Component, { tracked } from '@glimmer/component';
+import * as Rx from 'rxjs/Rx';
 import {
   AudioService,
   default as audioService,
@@ -10,35 +11,21 @@ import {
 } from '../../../utils/services/key';
 
 export default class SynthKey extends Component {
-  @tracked isActive: boolean;
+  private _keySub: Rx.Subscription;
   private _note: Note;
+  @tracked isActive: boolean;
 
   get audioService(): AudioService {
     return audioService;
   }
 
-  get keyService(): KeyService {
-    return keyService;
+  @tracked('args')
+  get keyName(): string {
+    return this.args.key.name.toUpperCase();
   }
 
-  didInsertElement(): void {
-    const {
-      args: {
-        key: {
-          shortcut,
-        },
-      },
-      keyService: {
-        keypress,
-      },
-    } = this;
-    keypress
-      .filter(({ type, key }) =>
-        key === shortcut
-      )
-      .subscribe(() =>
-        this.isActive ? this.stop() : this.start()
-      );
+  get keyService(): KeyService {
+    return keyService;
   }
 
   get note(): Note {
@@ -54,6 +41,31 @@ export default class SynthKey extends Component {
     return this._note;
   }
 
+  didInsertElement(): void {
+    const {
+      args: {
+        key: {
+          shortcut,
+        },
+      },
+      keyService: {
+        keypress,
+      },
+    } = this;
+    this._keySub = keypress
+      .filter(({ type, key }) =>
+        key === shortcut
+      )
+      .subscribe(() =>
+        this.isActive ? this.stop() : this.start()
+      );
+  }
+
+  willDestroy(): void {
+    this._keySub.unsubscribe();
+  }
+
+  // *** actions ***
   start(): void {
     this.note.start();
     this.isActive = true;

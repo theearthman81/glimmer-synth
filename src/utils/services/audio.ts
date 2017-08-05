@@ -27,7 +27,85 @@ export class AudioService {
     this.setUpAnalyser();
   }
 
-  private setUpMediaRecorder(): void {
+  createNote(note: string, octave: number): Note {
+    return new Note(note, octave, this.context, this.masterVolume);
+  }
+
+  decrementVolume(): void {
+    const {
+      masterVolume,
+    } = this;
+    const newValue = masterVolume.gain.value - VOLUME_INCREMENT;
+    this.volume = masterVolume.gain.value = Math.max(newValue, 0);
+  }
+
+  getAnalyserData(): Uint8Array  {
+    let {
+      analyser,
+      analyserFreqs,
+    } = this;
+    analyser.getByteFrequencyData(analyserFreqs);
+    return analyserFreqs;
+  }
+
+  incrementVolume(): void {
+    const {
+      masterVolume,
+    } = this;
+    const newValue = masterVolume.gain.value + VOLUME_INCREMENT;
+    this.volume = masterVolume.gain.value = Math.min(newValue, VOLUME_MAX);
+  }
+
+  startRecording(): void {
+    const {
+      context,
+      mediaRecorder,
+      masterVolume,
+    } = this;
+    this.audioData = [];
+    const silence = context.createBufferSource();
+    silence.connect(masterVolume);
+    mediaRecorder.start(0);
+  }
+
+  setUpAnalyser(): void  {
+    const {
+      context,
+      effect,
+      masterVolume,
+    } = this;
+    const analyser = context.createAnalyser();
+    analyser.fftSize = 64;
+    const analyserFreqs = new Uint8Array(analyser.frequencyBinCount);
+    analyser.connect(context.destination);
+    masterVolume.connect(analyser);
+    effect.connect(analyser);
+    this.analyser = analyser;
+    this.analyserFreqs = analyserFreqs;
+  }
+
+  setUpEffect(): void  {
+    // create white noise.
+    const {
+      context,
+      masterVolume,
+    } = this;
+    const { sampleRate } = context;
+    const convolver = context.createConvolver();
+    const buffer = context.createBuffer(2, 0.5 * sampleRate, sampleRate);
+    let left = buffer.getChannelData(0);
+    let right = buffer.getChannelData(1);
+    for (let i = 0; i < buffer.length; i++) {
+      left[i] = Math.random() * 6 - 1;
+      right[i] = Math.random() * 6 - 1;
+    }
+    convolver.buffer = buffer;
+    convolver.connect(context.destination);
+    this.masterVolume.connect(convolver);
+    this.effect = convolver;
+  }
+
+  setUpMediaRecorder(): void {
     const {
       audio,
       audioData,
@@ -56,7 +134,7 @@ export class AudioService {
 
     masterVolume.connect(dest);
     effect.connect(dest);
-    mediaRecorder = mediaRecorder;
+    this.mediaRecorder = mediaRecorder;
   }
 
   setUpVolume(): void {
@@ -66,86 +144,8 @@ export class AudioService {
     this.masterVolume = masterVolume;
   }
 
-  setUpEffect(): void  {
-    // create white noise.
-    const {
-      context,
-      masterVolume,
-    } = this;
-    const { sampleRate } = context;
-    const convolver = context.createConvolver();
-    const buffer = context.createBuffer(2, 0.5 * sampleRate, sampleRate);
-    let left = buffer.getChannelData(0);
-    let right = buffer.getChannelData(1);
-    for (let i = 0; i < buffer.length; i++) {
-      left[i] = Math.random() * 6 - 1;
-      right[i] = Math.random() * 6 - 1;
-    }
-    convolver.buffer = buffer;
-    convolver.connect(context.destination);
-    this.masterVolume.connect(convolver);
-    this.effect = convolver;
-  }
-
-  setUpAnalyser(): void  {
-    const {
-      context,
-      effect,
-      masterVolume,
-    } = this;
-    const analyser = context.createAnalyser();
-    analyser.fftSize = 64;
-    const analyserFreqs = new Uint8Array(analyser.frequencyBinCount);
-    analyser.connect(context.destination);
-    masterVolume.connect(analyser);
-    effect.connect(analyser);
-    this.analyser = analyser;
-    this.analyserFreqs = analyserFreqs;
-  }
-
-  getAnalyserData(): Uint8Array  {
-    let {
-      analyser,
-      analyserFreqs,
-    } = this;
-    analyser.getByteFrequencyData(analyserFreqs);
-    return analyserFreqs;
-  }
-
-  startRecording(): void {
-    const {
-      context,
-      mediaRecorder,
-      masterVolume,
-    } = this;
-    this.audioData = [];
-    const silence = context.createBufferSource();
-    silence.connect(masterVolume);
-    mediaRecorder.start(0);
-  }
-
-  incrementVolume(): void {
-    const {
-      masterVolume,
-    } = this;
-    const newValue = masterVolume.gain.value + VOLUME_INCREMENT;
-    this.volume = masterVolume.gain.value = Math.min(newValue, VOLUME_MAX);
-  }
-
-  decrementVolume(): void {
-    const {
-      masterVolume,
-    } = this;
-    const newValue = masterVolume.gain.value - VOLUME_INCREMENT;
-    this.volume = masterVolume.gain.value = Math.max(newValue, 0);
-  }
-
   stopRecording(): void {
     this.mediaRecorder.stop();
-  }
-
-  createNote(note: string, octave: number): Note {
-    return new Note(note, octave, this.context, this.masterVolume);
   }
 }
 

@@ -1,4 +1,5 @@
 import Component, { tracked } from '@glimmer/component';
+import * as Rx from 'rxjs/Rx';
 import {
   VOLUME_INCREMENT,
   AudioService,
@@ -18,37 +19,22 @@ const convertVolume = volume =>
   volume / VOLUME_INCREMENT;
 
 export default class SynthCtrl extends Component {
-  @tracked isRecording: boolean = false;
+  private _keySub: Rx.Subscription;
   @tracked isPlaying: boolean = false;
+  @tracked isRecording: boolean = false;
   @tracked volume: number;
 
   constructor(options) {
     super(options);
     this._handleKeyPress = this._handleKeyPress.bind(this);
   }
+
   get audioService(): AudioService {
     return audioService;
   }
 
   get keyService(): KeyService {
     return keyService;
-  }
-
-  didInsertElement(): void {
-    const {
-      audioService: {
-        volume,
-      },
-      keyService: {
-        keyup,
-      },
-    } = this;
-    this.volume = convertVolume(volume);
-    keyup
-      .filter(({ type, key }) =>
-        [DEC, INC, PLAY, RECORD].indexOf(key) > -1
-      )
-      .subscribe(this._handleKeyPress);
   }
 
   _handleKeyPress({ key }): void {
@@ -68,18 +54,36 @@ export default class SynthCtrl extends Component {
     }
   }
 
-  record(): void {
+  didInsertElement(): void {
     const {
-      audioService,
-      isRecording,
+      audioService: {
+        volume,
+      },
+      keyService: {
+        keyup,
+      },
     } = this;
-    if (isRecording) {
-      audioService.stopRecording();
-      this.isRecording = false;
-    } else {
-      audioService.startRecording();
-      this.isRecording = true;
-    }
+    this.volume = convertVolume(volume);
+    this._keySub = keyup
+      .filter(({ type, key }) =>
+        [DEC, INC, PLAY, RECORD].indexOf(key) > -1
+      )
+      .subscribe(this._handleKeyPress);
+  }
+
+  willDestroy(): void {
+    this._keySub.unsubscribe();
+  }
+
+  // *** actions ***
+  decrement(): void {
+    this.audioService.decrementVolume();
+    this.volume = convertVolume(this.audioService.volume);
+  }
+
+  increment(): void {
+    this.audioService.incrementVolume();
+    this.volume = convertVolume(this.audioService.volume);
   }
 
   play(): void {
@@ -98,13 +102,17 @@ export default class SynthCtrl extends Component {
     }
   }
 
-  increment(): void {
-    this.audioService.incrementVolume();
-    this.volume = convertVolume(this.audioService.volume);
-  }
-
-  decrement(): void {
-    this.audioService.decrementVolume();
-    this.volume = convertVolume(this.audioService.volume);
+  record(): void {
+    const {
+      audioService,
+      isRecording,
+    } = this;
+    if (isRecording) {
+      audioService.stopRecording();
+      this.isRecording = false;
+    } else {
+      audioService.startRecording();
+      this.isRecording = true;
+    }
   }
 }

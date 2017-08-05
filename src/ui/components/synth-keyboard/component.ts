@@ -1,7 +1,15 @@
 import Component from '@glimmer/component';
 
+interface Key {
+  name: string;
+  octave: number;
+  color: string;
+  indent: boolean;
+  shortcut: string;
+}
+
 export default class SynthKeyboard extends Component {
-  keys = [
+  keys: Array<Key>  = [
     {
       name: 'c',
       octave: 4,
@@ -192,4 +200,4 @@ export default class SynthKeyboard extends Component {
       shortcut: ',',
     },
   ];
-};
+}
