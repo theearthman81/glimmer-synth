@@ -22,15 +22,7 @@ export default class SynthGraphic extends Component {
   }
 
   _draw(): void {
-    const {
-      args: {
-        height,
-        width,
-      },
-      audioService,
-      canvas,
-      context,
-    } = this;
+    const { args: { height, width }, audioService, canvas, context } = this;
     let data = audioService.getAnalyserData();
     const blockUnit = height / 10;
 
@@ -46,7 +38,7 @@ export default class SynthGraphic extends Component {
       const blocks = Math.ceil(height / blockUnit);
 
       for (let j = 0, k = blocks; j < k; j++) {
-        const green = (j / k * 75) + 100;
+        const green = j / k * 75 + 100;
         context.fillStyle = `rgb(30,${green},30)`;
         context.fillRect(i * (barWidth + 2), offset, barWidth, blockUnit);
         offset += blockUnit + 0.5;
@@ -57,13 +49,7 @@ export default class SynthGraphic extends Component {
   }
 
   didInsertElement(): void {
-    const {
-      args: {
-        height,
-        width,
-      },
-      canvas,
-    } = this;
+    const { args: { height, width }, canvas } = this;
     this.context = canvas.getContext('2d');
     canvas.width = width;
     canvas.height = height;

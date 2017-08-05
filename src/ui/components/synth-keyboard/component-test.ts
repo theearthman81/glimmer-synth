@@ -8,13 +8,9 @@ module('Component: synth-keyboard', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders correctly', async function(assert) {
-    await this.render(
-      hbs`<synth-keyboard />`
-    );
+    await this.render(hbs`<synth-keyboard />`);
 
-    assert.ok(
-      this.containerElement.querySelector('.synth-keyboard')
-    );
+    assert.ok(this.containerElement.querySelector('.synth-keyboard'));
 
     assert.equal(
       this.containerElement.querySelectorAll('.synth-key').length,

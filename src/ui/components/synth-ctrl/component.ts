@@ -5,18 +5,14 @@ import {
   AudioService,
   default as audioService,
 } from '../../../utils/services/audio';
-import {
-  KeyService,
-  default as keyService,
-} from '../../../utils/services/key';
+import { KeyService, default as keyService } from '../../../utils/services/key';
 
 const DEC: string = '-';
 const INC: string = '+';
 const PLAY: string = '2';
 const RECORD: string = '1';
 
-const convertVolume = volume =>
-  volume / VOLUME_INCREMENT;
+const convertVolume = volume => volume / VOLUME_INCREMENT;
 
 export default class SynthCtrl extends Component {
   private _keySub: Rx.Subscription;
@@ -55,19 +51,10 @@ export default class SynthCtrl extends Component {
   }
 
   didInsertElement(): void {
-    const {
-      audioService: {
-        volume,
-      },
-      keyService: {
-        keyup,
-      },
-    } = this;
+    const { audioService: { volume }, keyService: { keyup } } = this;
     this.volume = convertVolume(volume);
     this._keySub = keyup
-      .filter(({ type, key }) =>
-        [DEC, INC, PLAY, RECORD].indexOf(key) > -1
-      )
+      .filter(({ type, key }) => [DEC, INC, PLAY, RECORD].indexOf(key) > -1)
       .subscribe(this._handleKeyPress);
   }
 
@@ -87,10 +74,7 @@ export default class SynthCtrl extends Component {
   }
 
   play(): void {
-    const {
-      audioService,
-      isPlaying,
-    } = this;
+    const { audioService, isPlaying } = this;
     if (isPlaying) {
       audioService.audio.pause();
       this.isPlaying = false;
@@ -103,10 +87,7 @@ export default class SynthCtrl extends Component {
   }
 
   record(): void {
-    const {
-      audioService,
-      isRecording,
-    } = this;
+    const { audioService, isRecording } = this;
     if (isRecording) {
       audioService.stopRecording();
       this.isRecording = false;

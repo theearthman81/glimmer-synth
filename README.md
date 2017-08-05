@@ -1,6 +1,7 @@
 # :musical_keyboard: Glimmer Synth
 
 [![Build Status](https://travis-ci.org/jimenglish81/glimmer-synth.svg?branch=master)](https://travis-ci.org/jimenglish81/glimmer-synth)
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 ```
  _______________________________________          |--|

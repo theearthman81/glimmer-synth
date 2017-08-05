@@ -10,10 +10,7 @@ export class KeyService {
   private _events: Rx.Observable<KeyEvent>;
 
   public get keydown(): Rx.Observable<KeyEvent> {
-    return this.keypress
-      .filter(({ type }) =>
-        type === 'keydown'
-      );
+    return this.keypress.filter(({ type }) => type === 'keydown');
   }
 
   public get keypress(): Rx.Observable<KeyEvent> {
@@ -23,25 +20,20 @@ export class KeyService {
 
       this._events = Rx.Observable
         .merge(keyDowns, keyUps)
-        .map(({ type, key, keyCode, which}) => ({
+        .map(({ type, key, keyCode, which }) => ({
           type,
           keyCode,
           key: key || which,
         }))
         .groupBy(e => e.keyCode)
-        .map(group =>
-          group.distinctUntilChanged(null, e => e.type)
-        )
+        .map(group => group.distinctUntilChanged(null, e => e.type))
         .mergeAll();
     }
     return this._events;
   }
 
   public get keyup(): Rx.Observable<KeyEvent> {
-    return this.keypress
-      .filter(({ type }) =>
-        type === 'keyup'
-      );
+    return this.keypress.filter(({ type }) => type === 'keyup');
   }
 }
 

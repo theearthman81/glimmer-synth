@@ -8,11 +8,11 @@ export const semitoneMap = {
   b: 2,
 };
 
-export const calculateSteps = (note: string, octave: number): number  =>
-  ((4 - octave) * -12) + semitoneMap[note];
+export const calculateSteps = (note: string, octave: number): number =>
+  (4 - octave) * -12 + semitoneMap[note];
 
 export const calculateFrequency = (semitones: number, base: number): number =>
-  base * Math.pow(Math.pow(2, 1/12), semitones);
+  base * Math.pow(Math.pow(2, 1 / 12), semitones);
 
 export class Note {
   context: AudioContext;
@@ -21,8 +21,13 @@ export class Note {
   isPlaying: boolean;
   primary: OscillatorNode | null;
   secondary: OscillatorNode | null;
-  constructor(note: string, octave: number, context: AudioContext, destination: GainNode) {
-    const [ pitch, symbol ] = note.split('');
+  constructor(
+    note: string,
+    octave: number,
+    context: AudioContext,
+    destination: GainNode
+  ) {
+    const [pitch, symbol] = note.split('');
     const semitones = calculateSteps(pitch, octave) + (symbol ? 1 : 0);
     this.frequency = calculateFrequency(semitones, 440.0);
     this.context = context;
@@ -31,12 +36,7 @@ export class Note {
   }
 
   start(): void {
-    const {
-      context,
-      destination,
-      frequency,
-      isPlaying,
-    } = this;
+    const { context, destination, frequency, isPlaying } = this;
     if (!isPlaying) {
       const primary = context.createOscillator();
       const secondary = context.createOscillator();
@@ -59,11 +59,7 @@ export class Note {
   }
 
   stop(): void {
-    const {
-      isPlaying,
-      primary,
-      secondary,
-    } = this;
+    const { isPlaying, primary, secondary } = this;
     if (isPlaying) {
       primary.stop(0);
       secondary.stop(0);

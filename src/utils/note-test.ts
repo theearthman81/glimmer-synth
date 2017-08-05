@@ -1,6 +1,4 @@
-import {
-  Note
-} from './note';
+import { Note } from './note';
 import sinon from 'sinon';
 
 const { module, test } = QUnit;
@@ -21,7 +19,7 @@ const { module, test } = QUnit;
 module('Util: Note', function(hooks) {
   test('it can be created', function(assert) {
     const context: AudioContext = new AudioContext();
-    const gain: GainNode =  context.createGain();
+    const gain: GainNode = context.createGain();
     const note: Note = new Note('c', 4, context, gain);
 
     assert.equal(note.isPlaying, false);

@@ -9,7 +9,7 @@ interface Key {
 }
 
 export default class SynthKeyboard extends Component {
-  keys: Array<Key>  = [
+  keys: Array<Key> = [
     {
       name: 'c',
       octave: 4,
