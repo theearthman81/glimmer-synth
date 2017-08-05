@@ -1,5 +1,7 @@
 # :musical_keyboard: Glimmer Synth
 
+[![Build Status](https://travis-ci.org/jimenglish81/glimmer-synth.svg?branch=master)](https://travis-ci.org/jimenglish81/glimmer-synth)
+
 ```
  _______________________________________          |--|
 | GLMR-SYNTH  |...  .       |           |        o' o'
@@ -14,6 +16,7 @@
 ```
 
 Experiment to build a synthesizer with using WebAudio API and Glimmer.
+See it [here](https://glmr-synth.surge.sh).
 
 ## :musical_note: Prerequisites
 

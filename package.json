@@ -6,6 +6,20 @@
     "doc": "doc",
     "test": "tests"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jimenglish81/glimmer-synth.git"
+  },
+  "keywords": [
+    "glimmerjs",
+    "synth",
+    "WebAudio"
+  ],
+  "author": "Jim English",
+  "bugs": {
+    "url": "https://github.com/jimenglish81/glimmer-synth/issues"
+  },
+  "homepage": "https://github.com/jimenglish81/glimmer-synth#readme",
   "scripts": {
     "build": "ember build -e production",
     "start": "ember server",
@@ -28,10 +42,11 @@
     "qunitjs": "^2.3.3",
     "rollup-plugin-commonjs": "^8.1.0",
     "sinon": "^2.4.1",
+    "surge": "^0.19.0",
     "typescript": "^2.2.2"
   },
   "engines": {
-    "node": ">= 4.0"
+    "node": ">= 6.0"
   },
   "private": true,
   "dependencies": {
