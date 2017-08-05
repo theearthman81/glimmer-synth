@@ -1,14 +1,8 @@
 import { setupRenderingTest } from '@glimmer/test-helpers';
 import hbs from '@glimmer/inline-precompile';
 import Component from '@glimmer/component';
-import sinon from 'sinon';
 
 const { module, test } = QUnit;
-
-class WrapperComponent extends Component {
-  myAction() {
-  }
-}
 
 module('Component: synth-volume', function(hooks) {
   setupRenderingTest(hooks);
@@ -17,12 +11,19 @@ module('Component: synth-volume', function(hooks) {
     await this.render(
       hbs`<synth-volume @volume=0 />`
     );
+
     assert.ok(
       this.containerElement.querySelector('.synth-volume')
     );
-
+    
     assert.ok(
       this.containerElement.querySelector('.synth-volume__ctrl')
+    );
+
+    assert.equal(
+      this.containerElement.querySelector('.synth-volume__ctrl')
+        .style.transform.match(/[0-9]+/)[0],
+      '0'
     );
 
     assert.equal(
@@ -35,6 +36,30 @@ module('Component: synth-volume', function(hooks) {
         this.containerElement.querySelector(`.synth-volume__tick:nth-child(${n + 1})`).title,
         `${n}`
       )
+    );
+  });
+
+  test('it rotates volume dial correctly', async function(assert) {
+    await this.render(
+      hbs`<synth-volume @volume=2 />`
+    );
+
+    assert.equal(
+      parseInt(this.containerElement.querySelector('.synth-volume__ctrl')
+        .style.transform.match(/[0-9]+/)[0], 10),
+      60
+    );
+  });
+
+  test('it does not rotate volume dial beyond max value', async function(assert) {
+    await this.render(
+      hbs`<synth-volume @volume=100 />`
+    );
+
+    assert.equal(
+      parseInt(this.containerElement.querySelector('.synth-volume__ctrl')
+        .style.transform.match(/[0-9]+/)[0], 10),
+      300
     );
   });
 });
