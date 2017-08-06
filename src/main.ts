@@ -5,12 +5,12 @@ import resolverConfiguration from '../config/resolver-configuration';
 
 export default class App extends Application {
   constructor() {
-    let moduleRegistry = new BasicModuleRegistry(moduleMap);
-    let resolver = new Resolver(resolverConfiguration, moduleRegistry);
+    const moduleRegistry = new BasicModuleRegistry(moduleMap);
+    const resolver = new Resolver(resolverConfiguration, moduleRegistry);
 
     super({
-      rootName: resolverConfiguration.app.rootName,
       resolver,
+      rootName: resolverConfiguration.app.rootName,
     });
   }
 }

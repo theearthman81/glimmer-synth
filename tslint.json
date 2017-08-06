@@ -2,5 +2,15 @@
   "extends": [
     "tslint:latest",
     "tslint-config-prettier"
-  ]
+  ],
+  "rules": {
+    "no-this-assignment": [true, {
+      "allow-destructuring": true
+    }],
+    "only-arrow-functions": false,
+    "variable-name": [true,
+      "check-format",
+      "allow-leading-underscore"
+    ]
+  }
 }

@@ -5,8 +5,8 @@ import {
 } from '../../../utils/services/audio';
 
 export default class SynthGraphic extends Component {
-  context: CanvasRenderingContext2D;
-  element: HTMLElement;
+  public element: HTMLElement;
+  private context: CanvasRenderingContext2D;
 
   constructor(options: object) {
     super(options);
@@ -21,9 +21,22 @@ export default class SynthGraphic extends Component {
     return this.element.querySelector('canvas');
   }
 
-  _draw(): void {
-    const { args: { height, width }, audioService, canvas, context } = this;
-    let data = audioService.getAnalyserData();
+  public didInsertElement(): void {
+    const { args: { height, width }, canvas } = this;
+    this.context = canvas.getContext('2d');
+    canvas.width = width;
+    canvas.height = height;
+    this._draw();
+  }
+
+  private _draw(): void {
+    const {
+      args: { height, width },
+      audioService: service,
+      canvas,
+      context,
+    } = this;
+    const data = service.getAnalyserData();
     const blockUnit = height / 10;
 
     context.fillStyle = '#1A1A1A';
@@ -46,13 +59,5 @@ export default class SynthGraphic extends Component {
     }
 
     requestAnimationFrame(this._draw);
-  }
-
-  didInsertElement(): void {
-    const { args: { height, width }, canvas } = this;
-    this.context = canvas.getContext('2d');
-    canvas.width = width;
-    canvas.height = height;
-    this._draw();
   }
 }

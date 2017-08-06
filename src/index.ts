@@ -1,5 +1,6 @@
-import App from './main';
+/* tslint:disable:no-console */
 import { ComponentManager, setPropertyDidChange } from '@glimmer/component';
+import App from './main';
 
 const app = new App();
 const containerElement = document.getElementById('app');
@@ -24,7 +25,7 @@ app.boot();
 console.log(
   `%cWelcome To GLMR Synth!
 %c
- _______________________________________ 
+ _______________________________________
 | GLMR-SYNTH  |...  .       |           |
 |  :::        |... ....  .  |           |
 |  :::        |.............|           |

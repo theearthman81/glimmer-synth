@@ -1,3 +1,4 @@
+/* tslint:disable: object-literal-sort-keys */
 export const semitoneMap = {
   c: -9,
   d: -7,
@@ -7,6 +8,7 @@ export const semitoneMap = {
   a: 0,
   b: 2,
 };
+/* tslint:enable: object-literal-sort-keys */
 
 export const calculateSteps = (note: string, octave: number): number =>
   (4 - octave) * -12 + semitoneMap[note];
@@ -15,12 +17,13 @@ export const calculateFrequency = (semitones: number, base: number): number =>
   base * Math.pow(Math.pow(2, 1 / 12), semitones);
 
 export class Note {
-  context: AudioContext;
-  destination: GainNode;
-  frequency: number;
-  isPlaying: boolean;
-  primary: OscillatorNode | null;
-  secondary: OscillatorNode | null;
+  public context: AudioContext;
+  public destination: GainNode;
+  public frequency: number;
+  public isPlaying: boolean;
+  public primary: OscillatorNode | null;
+  public secondary: OscillatorNode | null;
+
   constructor(
     note: string,
     octave: number,
@@ -35,7 +38,7 @@ export class Note {
     this.isPlaying = false;
   }
 
-  start(): void {
+  public start(): void {
     const { context, destination, frequency, isPlaying } = this;
     if (!isPlaying) {
       const primary = context.createOscillator();
@@ -58,7 +61,7 @@ export class Note {
     }
   }
 
-  stop(): void {
+  public stop(): void {
     const { isPlaying, primary, secondary } = this;
     if (isPlaying) {
       primary.stop(0);

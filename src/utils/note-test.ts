@@ -1,5 +1,5 @@
-import { Note } from './note';
 import sinon from 'sinon';
+import { Note } from './note';
 
 const { module, test } = QUnit;
 // const mockOscillator = () => ({
@@ -16,7 +16,7 @@ const { module, test } = QUnit;
 //   stop: sinon.spy(),
 // });
 
-module('Util: Note', function(hooks) {
+module('Util: Note', function(hook) {
   test('it can be created', function(assert) {
     const context: AudioContext = new AudioContext();
     const gain: GainNode = context.createGain();
