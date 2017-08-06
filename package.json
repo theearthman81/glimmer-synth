@@ -22,9 +22,16 @@
   "homepage": "https://github.com/jimenglish81/glimmer-synth#readme",
   "scripts": {
     "build": "ember build -e production",
+    "precommit": "lint-staged",
     "start": "ember server",
     "test": "ember test",
     "lint": "tslint -c tslint.json 'src/**/*.ts'"
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "prettier --single-quote --trailing-comma es5 --write",
+      "git add"
+    ]
   },
   "devDependencies": {
     "@glimmer/application": "^0.7.2",
@@ -40,6 +47,8 @@
     "ember-cli-inject-live-reload": "^1.6.1",
     "ember-cli-sass": "^6.2.0",
     "ember-cli-uglify": "^2.0.0-beta.1",
+    "husky": "^0.14.3",
+    "lint-staged": "^4.0.2",
     "prettier": "^1.5.3",
     "qunitjs": "^2.3.3",
     "rollup-plugin-commonjs": "^8.1.0",
