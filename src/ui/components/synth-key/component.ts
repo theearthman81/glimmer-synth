@@ -12,7 +12,6 @@ export default class SynthKey extends Component {
   private keySub: Rx.Subscription;
   @tracked private isActive: boolean;
 
-  // *** actions ***
   public start(): void {
     this.note.start();
     this.isActive = true;

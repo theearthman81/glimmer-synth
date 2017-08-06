@@ -33,7 +33,6 @@ export default class SynthCtrl extends Component {
     return keyService;
   }
 
-  // *** actions ***
   public decrement(): void {
     this.audioService.decrementVolume();
     this.volume = convertVolume(this.audioService.volume);
