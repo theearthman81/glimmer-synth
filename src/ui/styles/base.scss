@@ -2,6 +2,8 @@
 
 @mixin help-tip() {
   color: #4cbb17;
+  text-shadow: 0 0 3px #4cbb17;
+  font-family: 'Roboto Mono', monospace;
   font-weight: bolder;
 }
 

@@ -1,10 +1,11 @@
 .synth-help {
   background: #000;
   box-sizing: border-box;
-  color: #fff;
   bottom: 0;
+  color: #fff;
+  font-family: 'Roboto Mono', monospace;
   padding: 5px;
-  position: absolute;
+  position: fixed;
   width: 100%;
   z-index: 5;
 }
