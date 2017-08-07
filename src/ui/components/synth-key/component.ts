@@ -25,7 +25,7 @@ export default class SynthKey extends Component {
   public didInsertElement(): void {
     const { args: { key: { shortcut } }, keyService: { keypress } } = this;
     this.keySub = keypress
-      .filter(({ type, key }) => key === shortcut)
+      .filter(({ key }) => key === shortcut)
       .subscribe(() => (this.isActive ? this.stop() : this.start()));
   }
 

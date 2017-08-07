@@ -1,5 +1,8 @@
 /*** Thanks to https://codepen.io/zastrow/pen/oDBki ***/
 .synth-key {
+  align-items: center;
+  display: flex;
+  justify-content: center;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -60,5 +63,9 @@
 
   &:last-child {
     border-radius: 0 0 5px 5px;
+  }
+
+  &__help {
+    @include help-tip()
   }
 }

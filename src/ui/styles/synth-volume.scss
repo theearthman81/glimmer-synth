@@ -51,7 +51,7 @@ $volume-primary: #181818;
     height: 100%;
     border-radius: 50%;
     transform: rotate(0deg);
-    transition: transform 1s;
+    transition: transform 0.5s;
     cursor: pointer;
 
     &:before {

@@ -1,5 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300|Gruppo|Roboto+Mono);
 
+@mixin help-tip() {
+  color: #4cbb17;
+  font-weight: bolder;
+}
+
 ::selection {
   background: #fefec8;
 }

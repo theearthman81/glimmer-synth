@@ -1,8 +1,9 @@
 <div class="synth">
   <div class="synth__ctrl-wrapper">
-    <synth-ctrl />
+    <synth-ctrl @showTips={{showTips}} />
   </div>
   <div class="synth__keyboard-wrapper">
-    <synth-keyboard />
+    <synth-keyboard @showTips={{showTips}} />
   </div>
+  <synth-help />
 </div>

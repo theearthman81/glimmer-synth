@@ -71,7 +71,7 @@ export default class SynthCtrl extends Component {
     const { audioService: { volume }, keyService: { keyup } } = this;
     this.volume = convertVolume(volume);
     this.keySub = keyup
-      .filter(({ type, key }) => [DEC, INC, PLAY, RECORD].indexOf(key) > -1)
+      .filter(({ key }) => [DEC, INC, PLAY, RECORD].indexOf(key) > -1)
       .subscribe(this._handleKeyPress);
   }
 
