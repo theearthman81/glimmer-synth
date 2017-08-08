@@ -17,7 +17,7 @@
       -1px 0 0 rgba(255,255,255,0.8) inset,
       0 0 5px #ccc inset, 0 0 3px rgba(0,0,0,0.2);
     height: 256px;
-    width: 64px;
+    width: 7%;
     z-index: 1;
   }
 
@@ -41,7 +41,7 @@
       0 2px 4px rgba(0,0,0,0.5);
     height: 160px;
     margin: 0 0 0 -1em;
-  	width: 32px;
+  	width: 3.5%;
     z-index: 2;
   }
 
@@ -54,7 +54,7 @@
   }
 
   &--indent {
-    margin: 0 0 0 -16px;
+    margin: 0 0 0 -1.6%;
   }
 
   &:first-child {

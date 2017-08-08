@@ -3,6 +3,8 @@
   onmousedown={{action start}}
   onmouseup={{action stop}}
   onmouseout={{action stop}}
+  ontouchstart={{action start}}
+  ontouchstop={{action stop}}
   title={{concat keyName " (" @key.shortcut ")"}}>
   <span class="synth-key__help">
     {{#if @showTip}}
