@@ -30,8 +30,10 @@
   </div>
 
   {{#if @showTips}}
-    <div class="synth-ctrl__help synth-ctrl__help--record">1</div>
-    <div class="synth-ctrl__help synth-ctrl__help--play">2</div>
+    {{#if supportsRecording}}
+      <div class="synth-ctrl__help synth-ctrl__help--record">1</div>
+      <div class="synth-ctrl__help synth-ctrl__help--play">2</div>
+    {{/if}}
     <div class="synth-ctrl__help synth-ctrl__help--volume">-/+</div>
   {{/if}}
 </div>
