@@ -1,11 +1,17 @@
 <div class="synth-wrapper">
-  <div class="synth">
-    <div class="synth__ctrl-wrapper">
-      <synth-ctrl @showTips={{showTips}} />
+  {{#if supportsAudio}}
+    <div class="synth">
+      <div class="synth__ctrl-wrapper">
+        <synth-ctrl @showTips={{showTips}} />
+      </div>
+      <div class="synth__keyboard-wrapper">
+        <synth-keyboard @showTips={{showTips}} />
+      </div>
     </div>
-    <div class="synth__keyboard-wrapper">
-      <synth-keyboard @showTips={{showTips}} />
-    </div>
-  </div>
-  <synth-help />
+    <synth-help />
+  {{else}}
+    <p class="synth-wrapper__web-audio-warning">
+      Unfortunately your device does not support Web Audio.
+    </p>
+  {{/if}}
 </div>

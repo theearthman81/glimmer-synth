@@ -10,6 +10,13 @@ module.exports = function(defaults) {
          commonjs(),
        ],
      },
+    'ember-cli-uglify': {
+      uglify: {
+        mangle: {
+          safari10: true,
+        },
+      },
+    },
   });
 
   return app.toTree();

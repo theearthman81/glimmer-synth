@@ -33,6 +33,10 @@ export default class SynthCtrl extends Component {
     return keyService;
   }
 
+  get supportsRecording(): boolean {
+    return this.audioService.supportsRecording;
+  }
+
   public decrement(): void {
     this.audioService.decrementVolume();
     this.volume = convertVolume(this.audioService.volume);

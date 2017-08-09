@@ -3,6 +3,10 @@ import { Note } from '../note';
 export const VOLUME_MAX: number = 1.5;
 export const VOLUME_INCREMENT: number = VOLUME_MAX / 10;
 
+/* tslint:disable */
+const AudioCtr = window.AudioContext || window.webkitAudioContext;
+/* tslint:enable */
+
 export class AudioService {
   public audio: HTMLAudioElement;
   public context: AudioContext;
@@ -16,7 +20,7 @@ export class AudioService {
   private mediaRecorder: MediaRecorder;
 
   constructor() {
-    this.context = new AudioContext();
+    this.context = new AudioCtr();
     this.audio = new Audio();
     this.audioData = [];
     this.hasAudioRecording = false;
@@ -25,6 +29,14 @@ export class AudioService {
     this.setUpEffect();
     this.setUpMediaRecorder();
     this.setUpAnalyser();
+  }
+
+  public get supportsAudio(): boolean {
+    return !!AudioCtr;
+  }
+
+  public get supportsRecording(): boolean {
+    return !!this.context.createMediaStreamDestination;
   }
 
   public createNote(note: string, octave: number): Note {
@@ -93,24 +105,26 @@ export class AudioService {
 
   private setUpMediaRecorder(): void {
     const { audio, audioData, context, effect, masterVolume } = this;
-    const dest = context.createMediaStreamDestination();
-    const mediaRecorder = new MediaRecorder(dest.stream);
-    mediaRecorder.ignoreMutedMedia = false;
+    if (this.supportsRecording) {
+      const dest = context.createMediaStreamDestination();
+      const mediaRecorder = new MediaRecorder(dest.stream);
+      mediaRecorder.ignoreMutedMedia = false;
 
-    mediaRecorder.ondataavailable = ({ data }) => audioData.push(data);
+      mediaRecorder.ondataavailable = ({ data }) => audioData.push(data);
 
-    mediaRecorder.onstop = () => {
-      const blob = new Blob(audioData, {
-        type: 'audio/ogg; codecs=opus',
-      });
-      audio.src = URL.createObjectURL(blob);
-      audio.loop = true;
-      this.hasAudioRecording = true;
-    };
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(audioData, {
+          type: 'audio/ogg; codecs=opus',
+        });
+        audio.src = URL.createObjectURL(blob);
+        audio.loop = true;
+        this.hasAudioRecording = true;
+      };
 
-    masterVolume.connect(dest);
-    effect.connect(dest);
-    this.mediaRecorder = mediaRecorder;
+      masterVolume.connect(dest);
+      effect.connect(dest);
+      this.mediaRecorder = mediaRecorder;
+    }
   }
 
   private setUpVolume(): void {

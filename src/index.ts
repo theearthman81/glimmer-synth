@@ -1,4 +1,4 @@
-/* tslint:disable:no-console */
+/* tslint:disable: no-console */
 import { ComponentManager, setPropertyDidChange } from '@glimmer/component';
 import App from './main';
 
@@ -25,7 +25,7 @@ app.boot();
 console.log(
   `%cWelcome To GLMR Synth!
 %c
- _______________________________________
+ _______________________________________'
 | GLMR-SYNTH  |...  .       |           |
 |  :::        |... ....  .  |           |
 |  :::        |.............|           |

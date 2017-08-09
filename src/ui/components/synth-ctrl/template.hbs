@@ -1,20 +1,22 @@
 <div class="synth-ctrl">
   <div class="synth-ctrl__btns">
     <h2 class="synth-ctrl__logo">GLMR-Synth</h2>
-    <synth-btn
-      @action={{action record}}
-      @isActive={{isRecording}}
-      @text="rec"
-      @type="record"
-      @title="(1)"
-    />
-    <synth-btn
-      @action={{action play}}
-      @isActive={{isPlaying}}
-      @text="play"
-      @type="play"
-      @title="(2)"
-    />
+    {{#if supportsRecording}}
+      <synth-btn
+        @action={{action record}}
+        @isActive={{isRecording}}
+        @text="rec"
+        @type="record"
+        @title="(1)"
+      />
+      <synth-btn
+        @action={{action play}}
+        @isActive={{isPlaying}}
+        @text="play"
+        @type="play"
+        @title="(2)"
+      />
+    {{/if}}
   </div>
   <synth-graphic
     @height=120
