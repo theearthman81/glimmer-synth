@@ -19,7 +19,7 @@ self.addEventListener('install', function(event) {
               .map(function(key) {
                 return '/' + assets[key];
               })
-              .concat(ASSETS);
+              .concat(ASSETS)
           );
         });
     })
