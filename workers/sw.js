@@ -20,7 +20,6 @@ self.addEventListener('install', function(event) {
             })
             .concat(ASSETS);
           cache.addAll(activeCache);
-          self._activeCache = activeCache;
         });
     })
   );
