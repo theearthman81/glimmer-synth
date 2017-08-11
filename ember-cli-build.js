@@ -1,15 +1,13 @@
 'use strict';
 
-const GlimmerApp = require('@glimmer/application-pipeline').GlimmerApp;
+const { GlimmerApp } = require('@glimmer/application-pipeline');
 const commonjs = require('rollup-plugin-commonjs');
+const Funnel = require('broccoli-funnel');
+const merge = require('broccoli-merge-trees');
+const { log } = require('broccoli-stew');
 
 module.exports = function(defaults) {
-  let app = new GlimmerApp(defaults, {
-    rollup: {
-       plugins: [
-         commonjs(),
-       ],
-     },
+  const app = new GlimmerApp(defaults, {
     'ember-cli-uglify': {
       uglify: {
         mangle: {
@@ -17,7 +15,26 @@ module.exports = function(defaults) {
         },
       },
     },
+    fingerprint: {
+      assetMapPath: './asset-map.json',
+      generateAssetMap: true,
+      replaceExtensions: ['html', 'css', 'js', 'json'],
+    },
+    rollup: {
+      plugins: [
+        commonjs()
+      ],
+    },
   });
 
-  return app.toTree();
+  const workers = new Funnel('workers', {
+    srcDir: '/',
+    destDir: '/',
+    include: ['**/*.js'],
+  });
+
+  return log(merge([app.toTree(), workers]), {
+    output: 'tree',
+    label: 'app-tree',
+  });
 };

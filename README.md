@@ -1,6 +1,8 @@
 # :musical_keyboard: Glimmer Synth
 
 [![Build Status](https://travis-ci.org/jimenglish81/glimmer-synth.svg?branch=master)](https://travis-ci.org/jimenglish81/glimmer-synth)
+[![dependencies Status](https://david-dm.org/jimenglish81/glimmer-synth/status.svg)](https://david-dm.org/jimenglish81/glimmer-synth)
+[![devDependencies Status](https://david-dm.org/jimenglish81/glimmer-synth/dev-status.svg)](https://david-dm.org/jimenglish81/glimmer-synth?type=dev)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 ```

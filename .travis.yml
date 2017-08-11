@@ -14,5 +14,5 @@ script:
 deploy:
   provider: surge
   project: ./dist/
-  domain: glmr-synth.surge.sh
+  domain: https://glmr-synth.surge.sh
   skip_cleanup: true

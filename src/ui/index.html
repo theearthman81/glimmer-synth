@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>GLMR-Synth</title>
-    <meta name="description" content="">
+    <meta name="description" content="Glimmerjs synthesizer using WebAudio API.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#fff">
 
     {{content-for "head"}}
 
-    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/png" size="16x16 32x32" href="icons/favicon.png">
     <link rel="stylesheet" href="{{rootURL}}app.css">
 
     {{content-for "head-footer"}}
@@ -19,6 +21,11 @@
 
     <div id="app"></div>
     <script src="{{rootURL}}app.js"></script>
+    <noscript>
+      <p class="warning">
+        Unfortunately your device does not currently have JavaScript enabled.
+      </p>
+    </noscript>
 
     {{content-for "body-footer"}}
   </body>
