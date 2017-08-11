@@ -14,12 +14,13 @@ self.addEventListener('install', function(event) {
         })
         .then(function(json) {
           var assets = json.assets || {};
-          var activeCache = Object.keys(assets)
-            .map(function(key) {
-              return '/' + assets[key];
-            })
-            .concat(ASSETS);
-          cache.addAll(activeCache);
+          cache.addAll(
+            Object.keys(assets)
+              .map(function(key) {
+                return '/' + assets[key];
+              })
+              .concat(ASSETS);
+          );
         });
     })
   );
@@ -28,8 +29,8 @@ self.addEventListener('install', function(event) {
 self.addEventListener('fetch', function(event) {
   var request = event.request;
   event.respondWith(
-    caches.match(request).then(function(response) {
-      return response || fetch(request);
+    caches.match(request).then(function(res) {
+      return res || fetch(request);
     })
   );
 });
