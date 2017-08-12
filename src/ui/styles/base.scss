@@ -12,6 +12,7 @@
 }
 
 body {
+  -webkit-tap-highlight-color: transparent;
   background-color: #6c2505;
   background-image:
     linear-gradient(94deg, rgba(91,33,5,.1) 0%,rgba(83,29,4,0.32) 23%,rgba(74,24,3,.41) 47%,rgba(80,27,5,0.44) 70%,rgba(81,27,5,0.59) 74%,rgba(93,33,4,0.2) 83%,rgba(115,43,3,.5) 100%),
@@ -21,6 +22,10 @@ body {
   font-family: "Open Sans", sans-serif;
   margin: 0;
   padding: 0;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .warning {
