@@ -19,7 +19,8 @@ deploy:
 
 after_deploy:
 - openssl aes-256-cbc -K $encrypted_6bdb3c89b407_key -iv $encrypted_6bdb3c89b407_iv
-  -in ./.travis/deploy_key.enc -out ./.travis/deploy_key -d
+  -in ./.travis/deploy_key.enc -out ./.travis/deploy_key.pem -d
+- git pull
 - npm version --no-git-tag-version minor
 - git commit -am "Bump minor [ci skip]"
 - chmod 600 .travis/deploy_key.pem
