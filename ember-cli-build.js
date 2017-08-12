@@ -1,10 +1,11 @@
 'use strict';
 
 const { GlimmerApp } = require('@glimmer/application-pipeline');
+const { log } = require('broccoli-stew');
 const commonjs = require('rollup-plugin-commonjs');
 const Funnel = require('broccoli-funnel');
 const merge = require('broccoli-merge-trees');
-const { log } = require('broccoli-stew');
+const replace = require('broccoli-string-replace');
 
 module.exports = function(defaults) {
   const app = new GlimmerApp(defaults, {
@@ -22,16 +23,25 @@ module.exports = function(defaults) {
     },
     rollup: {
       plugins: [
-        commonjs()
+        commonjs(),
       ],
     },
   });
 
-  const workers = new Funnel('workers', {
-    srcDir: '/',
-    destDir: '/',
-    include: ['**/*.js'],
-  });
+  const workers = replace(
+    new Funnel('workers', {
+      srcDir: '/',
+      destDir: '/',
+      include: ['**/*.js'],
+    }),
+    {
+      files: ['sw.js'],
+      pattern: {
+        match: /<@VERSION@>/g,
+        replacement: require('./package.json').version,
+      },
+    }
+  );
 
   return log(merge([app.toTree(), workers]), {
     output: 'tree',

@@ -1,4 +1,4 @@
-var APP = 'glimmer-synth';
+var CACHE_NAME = 'glimmer-synth-<@VERSION@>';
 var ASSETS = [
   '.',
   'index.html',
@@ -7,7 +7,7 @@ var ASSETS = [
 
 self.addEventListener('install', function(event) {
   event.waitUntil(
-    caches.open(APP).then(function(cache) {
+    caches.open(CACHE_NAME).then(function(cache) {
       return fetch('./asset-map.json')
         .then(function(res) {
           return res.ok ? res.json() : {};
@@ -22,6 +22,22 @@ self.addEventListener('install', function(event) {
               .concat(ASSETS)
           );
         });
+    })
+  );
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames
+          .filter(function(cacheName) {
+            return cacheName !== CACHE_NAME;
+          })
+          .map(function(cacheName) {
+            return caches.delete(cacheName);
+          })
+      );
     })
   );
 });

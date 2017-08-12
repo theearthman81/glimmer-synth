@@ -3,3 +3,6 @@ tmp/*
 dist
 *.log
 .DS_Store
+.travis/deploy_key
+.travis/deploy_key.pem
+.travis/deploy_key.pub
