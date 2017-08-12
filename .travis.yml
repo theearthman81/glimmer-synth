@@ -27,4 +27,4 @@ after_deploy:
 - eval "$(ssh-agent -s)"
 - ssh-add .travis/deploy_key.pem
 - git remote add deploy git@github.com:jimenglish81/glimmer-synth.git
-- git push deploy
+- git push deploy master
