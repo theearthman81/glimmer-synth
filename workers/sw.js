@@ -44,9 +44,21 @@ self.addEventListener('activate', function(event) {
 
 self.addEventListener('fetch', function(event) {
   var request = event.request;
+  var requestUrl = new URL(request.url);
   event.respondWith(
-    caches.match(request).then(function(res) {
-      return res || fetch(request);
+    caches.open(CACHE_NAME).then(function(cache) {
+      return cache.match(request).then(function(res) {
+        if (res) {
+          return res;
+        }
+
+        return fetch(request).then(function(networkRes) {
+          if (/fonts\.gstatic\.com\//.test(requestUrl.href)) {
+            cache.put(request, networkRes.clone());
+          }
+          return networkRes;
+        });
+      });
     })
   );
 });
