@@ -34,7 +34,7 @@ export default class SynthCtrl extends Component {
   }
 
   get supportsRecording(): boolean {
-    return this.audioService.supportsRecording;
+    return AudioService.supportsRecording;
   }
 
   public decrement(): void {

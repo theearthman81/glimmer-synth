@@ -8,12 +8,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="theme-color" content="#fff">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    
+
     {{content-for "head"}}
+    <style type="text/css">
+      body {
+        background-color: #6c2505;
+        font-family: arial, sans-serif;
+      }
+      #app {
+        display: none;
+      }
+      .warning {
+        color: #fff;
+      }
+    </style>
 
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" type="image/png" size="16x16 32x32" href="icons/favicon.png">
-    <link rel="stylesheet" href="{{rootURL}}app.css">
+    <link rel="stylesheet" href="{{rootURL}}app.css" disabled>
 
     {{content-for "head-footer"}}
   </head>
@@ -22,6 +34,11 @@
 
     <div id="app"></div>
     <script src="{{rootURL}}app.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function(event) {
+        document.head.querySelector('link[rel="stylesheet"][disabled]').disabled = false;
+      });
+    </script>
     <noscript>
       <p class="warning">
         Unfortunately your device does not currently have JavaScript enabled.

@@ -19,7 +19,7 @@ export default class SynthApp extends Component {
   }
 
   get supportsAudio(): boolean {
-    return this.audioService.supportsAudio;
+    return AudioService.supportsAudio;
   }
 
   public didInsertElement(): void {

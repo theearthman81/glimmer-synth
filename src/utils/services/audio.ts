@@ -4,7 +4,8 @@ export const VOLUME_MAX: number = 1.5;
 export const VOLUME_INCREMENT: number = VOLUME_MAX / 10;
 
 /* tslint:disable */
-const AudioCtr = window.AudioContext || window.webkitAudioContext;
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+const noop = () => {};
 /* tslint:enable */
 
 export class AudioService {
@@ -20,48 +21,50 @@ export class AudioService {
   private mediaRecorder: MediaRecorder;
 
   constructor() {
-    this.context = new AudioCtr();
+    this.context = new AudioCtx();
     this.audio = new Audio();
     this.audioData = [];
     this.hasAudioRecording = false;
     this.volume = VOLUME_INCREMENT * 2;
-    this.setUpVolume();
-    this.setUpEffect();
-    this.setUpMediaRecorder();
-    this.setUpAnalyser();
   }
 
-  public get supportsAudio(): boolean {
-    return !!AudioCtr;
+  public static get supportsAudio(): boolean {
+    return !!AudioCtx;
   }
 
-  public get supportsRecording(): boolean {
-    return !!this.context.createMediaStreamDestination;
+  public static get supportsRecording(): boolean {
+    return !!window.MediaStreamAudioDestinationNode;
   }
 
   public createNote(note: string, octave: number): Note {
+    this.setUp();
     return new Note(note, octave, this.context, this.masterVolume);
   }
 
   public decrementVolume(): void {
+    this.setUp();
     const { masterVolume } = this;
     const newValue = masterVolume.gain.value - VOLUME_INCREMENT;
     this.volume = masterVolume.gain.value = Math.max(newValue, 0);
   }
 
   public getAnalyserData(): Uint8Array {
-    const { analyser, analyserFreqs } = this;
-    analyser.getByteFrequencyData(analyserFreqs);
+    const { analyser, analyserFreqs = new Uint8Array(0) } = this;
+    if (analyser) {
+      analyser.getByteFrequencyData(analyserFreqs);
+    }
     return analyserFreqs;
   }
 
   public incrementVolume(): void {
+    this.setUp();
     const { masterVolume } = this;
     const newValue = masterVolume.gain.value + VOLUME_INCREMENT;
     this.volume = masterVolume.gain.value = Math.min(newValue, VOLUME_MAX);
   }
 
   public startRecording(): void {
+    this.setUp();
     const { context, mediaRecorder, masterVolume } = this;
     this.audioData = [];
     const silence = context.createBufferSource();
@@ -70,7 +73,17 @@ export class AudioService {
   }
 
   public stopRecording(): void {
+    this.setUp();
     this.mediaRecorder.stop();
+  }
+
+  private setUp(): void {
+    this.setUpVolume();
+    this.setUpEffect();
+    this.setUpMediaRecorder();
+    this.setUpAnalyser();
+
+    this.setUp = noop;
   }
 
   private setUpAnalyser(): void {
@@ -105,7 +118,7 @@ export class AudioService {
 
   private setUpMediaRecorder(): void {
     const { audio, audioData, context, effect, masterVolume } = this;
-    if (this.supportsRecording) {
+    if (AudioService.supportsRecording) {
       const dest = context.createMediaStreamDestination();
       const mediaRecorder = new MediaRecorder(dest.stream);
       mediaRecorder.ignoreMutedMedia = false;

@@ -7,6 +7,10 @@
 @import 'synth-keyboard';
 @import 'synth-help';
 
+#app {
+  display: block;
+}
+
 .synth-wrapper {
   align-items: center;
   display: flex;
@@ -40,7 +44,7 @@
     display: none;
   }
 
-  .synth-help__content {
+  .synth-help {
     display: none;
   }
 
